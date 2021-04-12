@@ -54,7 +54,7 @@ class MyPrompt(Cmd):
         '''test the machine learning model on a single test input. Shorthand: c'''
         start = time.process_time()
         model = load("model.joblib")
-        email = input("Enter your test email:    ")
+        email = input("Enter your test email file name:    ")
         matrix = extract_text_features(email)
         result = model.predict(matrix)
         if (result[0]):
@@ -69,5 +69,7 @@ class MyPrompt(Cmd):
             return self.do_train(inp)
         if inp == 'b':
             return self.do_test(inp)
+        if inp == 'c':
+            return self.do_test_single(inp)
 
 MyPrompt().cmdloop()
