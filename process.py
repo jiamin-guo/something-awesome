@@ -5,6 +5,7 @@ from collections import Counter
 from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
 from joblib import dump, load
 
+nltk.download('wordnet')
 TRAIN_DIR = 'data/train-set'
 TEST_DIR = 'data/test-set'
 # TRAIN_DIR = 'ling-spam/train-mails'
@@ -51,9 +52,9 @@ def extract_text_features(file):
     dictionary = load('dictionary.joblib')
     features_matrix = np.zeros((1, MAX_WORDS))
     with open(file) as text:
-        words = nltk.word_tokenize(text)
+        words = nltk.word_tokenize(text.read())
         for word in words:
             for k, word_count in enumerate(dictionary):
                 if word_count[0] == word:
-                    features_matrix[i, k] = words.count(word)
+                    features_matrix[0, k] = words.count(word)
     return features_matrix

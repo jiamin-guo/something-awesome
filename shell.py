@@ -46,19 +46,21 @@ class MyPrompt(Cmd):
         cm = confusion_matrix(test_labels, result)
         print(f'tn: {cm[0, 0]}, fp: {cm[0, 1]}\nfn: {cm[1, 0]}, tp: {cm[1, 1]}')
         print(classification_report(test_labels,result))
-        print(accuracy_score(test_labels,result))
+        print("Accuracy: " + str(accuracy_score(test_labels,result) * 100) + "%")
 
         print("Time taken to test model: " + str(time.process_time() - start))
 
-    # def do_test_single(self, inp):
-    #     '''test the machine learning model on a single test input. Shorthand: c'''
-    #     start = time.process_time()
-    #     model = load("model.joblib")
-    #     email = input("Enter your test email:")
-    #     print(email)
-    #     matrix = extract_text_features(email)
-    #     result = model.predict(matrix)
-    #     print(result)
+    def do_test_single(self, inp):
+        '''test the machine learning model on a single test input. Shorthand: c'''
+        start = time.process_time()
+        model = load("model.joblib")
+        email = input("Enter your test email:    ")
+        matrix = extract_text_features(email)
+        result = model.predict(matrix)
+        if (result[0]):
+            print("************* This email is considered SPAM")
+        else:
+            print("************* This emails is considered HAM")
 
     def default(self, inp):
         if inp == 'x' or inp == 'q':
